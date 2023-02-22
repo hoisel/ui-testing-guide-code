@@ -1,9 +1,8 @@
-import React from 'react';
+import { Box, Heading, Icon } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
-import { Box, Heading } from '@chakra-ui/react';
-import { Icon } from '@chakra-ui/react';
-import { TaskList } from './components/TaskList';
+
 import { EmptyState } from './components/EmptyState';
+import { TaskList } from './components/TaskList';
 import { useTasks } from './useTasks';
 
 const FrownIcon = (props) => (
@@ -29,6 +28,10 @@ export const InboxScreen = ({ error }) => {
     dispatch({ type: archive ? 'ARCHIVE_TASK' : 'INBOX_TASK', id });
   };
 
+  const deleteTask = (id) => {
+    dispatch({ type: 'DELETE_TASK', id });
+  };
+
   const togglePinTask = (state, id) => {
     dispatch({ type: state === 'TASK_PINNED' ? 'INBOX_TASK' : 'PIN_TASK', id });
   };
@@ -38,26 +41,13 @@ export const InboxScreen = ({ error }) => {
   };
 
   if (error) {
-    return (
-      <EmptyState
-        h="75vh"
-        Icon={FrownIcon}
-        title="Oh no!"
-        subtitle="Something went wrong"
-      />
-    );
+    return <EmptyState h="75vh" Icon={FrownIcon} title="Oh no!" subtitle="Something went wrong" />;
   }
 
   return (
     <Box p={4} bg="brand.300">
       <Box as="nav" bg="brand.200" py={6} px={5}>
-        <Heading
-          as="h1"
-          fontSize="lg"
-          lineHeight="8"
-          color="brand.500"
-          textAlign={['center', 'center', 'left']}
-        >
+        <Heading as="h1" fontSize="lg" lineHeight="8" color="brand.500" textAlign={['center', 'center', 'left']}>
           Taskbox
         </Heading>
       </Box>
@@ -66,6 +56,7 @@ export const InboxScreen = ({ error }) => {
         onArchiveTask={archiveTask}
         onTogglePinTask={togglePinTask}
         onEditTitle={editTitle}
+        onDeleteTask={deleteTask}
       />
     </Box>
   );
