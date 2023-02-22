@@ -1,5 +1,5 @@
 
-name: 'UI Tests Action 2'
+name: 'UI Tests'
 
 on: push
 
